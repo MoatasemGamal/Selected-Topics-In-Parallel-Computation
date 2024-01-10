@@ -198,8 +198,8 @@ thr1.start();
 \end{enumerate}
 \textbf{Example} \\
 \begin{lstlisting}[language=java]
-/* ThreadEx1.java: A simple program creating and invoking a thread object by
-extending the standard Thread class. */
+/* ThreadEx1.java: A simple program creating and invoking a thread object 
+by extending the standard Thread class. */
 class MyThread extends Thread {
     public void run() {
         System.out.println(" this thread is running ... ");
@@ -380,7 +380,23 @@ public class Counter{
     \item The common mistake here is one method is static synchronized and another method is non static synchronized.
     \item This makes a difference as locks are placed on two different objects. The class object and the instance and hence two different threads can access the methods simultaneously.
 \end{itemize}
+\subsection{Synchronization vs Static Synchronization}
 
+\begin{tabular}{c|p{0.35\linewidth}|p{0.35\linewidth}}
+    Feature                    & \textbf{Synchronization}                                                                & \textbf{Static Synchronization}                                                                     \\
+    \hline
+    Scope                      & Object-level                                                                            & Class-level                                                                                         \\
+    \hline
+    Lock Acquisition           & Acquires lock on the object instance                                                    & Acquires lock on the class itself                                                                   \\
+    \hline
+    Impact on Multiple Objects & Each object's synchronized methods can be accessed by different threads simultaneously. & Only one thread can access any static synchronized method of the class at a time.                   \\
+    \hline
+    Usage                      & Used to protect shared resources at the object level                                    & Used to protect shared resources at the class level or for operations that involve the class itself \\
+    \hline
+    Declaration                & Applied to instance methods using the synchronized keyword                              & Applied to static methods using the static synchronized keywords                                    \\
+    \hline
+    Example                    & public synchronized void deposit() { ... }                                              & public static synchronized void getInstance() { ... }                                               \\
+\end{tabular}
 \chapter{Parallel Computing: Overview}{by John Urbanicurbanic@psc.edu}
 \section{Why we need parallel computing?}
 for \textbf{New Applications} \\
