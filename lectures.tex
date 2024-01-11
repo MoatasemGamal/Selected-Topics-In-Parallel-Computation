@@ -109,7 +109,7 @@ Note: A single processor computer is shared among multiple applications with pre
 % \caption{Process VS Thread}
 % \end{table}
 \subsection{Process containing single and multiple threads}
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.7\linewidth]{figures/process-containing-threads.png}
 \end{figure}
@@ -124,7 +124,7 @@ Note: A single processor computer is shared among multiple applications with pre
 \begin{itemize}
     \item The concept of context switching is integral to threading.
     \item A hardware timer is used by the processor to determine the end of the time-slice for each thread.
-    \item The timer signals at the end of the timeslice and in turn the processor saves all information required for the current thread onto a stack. Then the processor moves this information from the stack into a predefined data structure called a context structure.
+    \item The timer signals at the end of the timeslice and in turn the processor saves all information required for the current thread onto a \textbf{stack}. Then the processor moves this information from the stack into a predefined data structure called a \textbf{context structure}.
     \item When the processor wants to switch back to a previously executing thread, it transfers all the information from the context structure associated with the thread to the stack.
 \end{itemize}
 
@@ -138,14 +138,14 @@ We focus on learning how to write an application containing multiple tasks that 
     \item Threads are lightweight processes as the overhead of switching between threads is less
     \item They can be easily spawned
     \item The Java Virtual Machine (JVM) spawns a thread when your program is run called the Main Thread
-    \item Multiple Threads on single CPU or multiple CPUs:\begin{figure}[h]
+    \item Multiple Threads on single CPU or multiple CPUs:\begin{figure}[!h]
               \includegraphics[width=0.4\linewidth]{figures/Multiple-threads-on-multiple-CPUs.png}
               Multiple Threads on multiple CPUs
               \\ ----------------------------------------------------------------------- \\
               \includegraphics[width=0.4\linewidth]{figures/Multiple-threads-sharing-a-single-CPU.png}
               Multiple threads sharing a single CPU
           \end{figure}
-    \item Program with master and children threads \begin{figure}[h]
+    \item Program with master and children threads \begin{figure}[!h]
               \centering
               \includegraphics[width=0.6\linewidth]{figures/Program-with-master-and-children-threads.png}
           \end{figure}
@@ -164,7 +164,7 @@ We focus on learning how to write an application containing multiple tasks that 
               \item Create a class that \textbf{extends} the standard \textbf{Thread} class.
               \item Create a class that \textbf{implements} the standard \textbf{Runnable} interface
           \end{enumerate}
-          \begin{figure}
+          \begin{figure}[!h]
               \centering
               \includegraphics[width=0.8\linewidth]{figures/threads-in-java.png}
           \end{figure}
@@ -255,18 +255,18 @@ class ThreadEx2 {
 \end{lstlisting}
 \section{Life cycle of threads \& Thread states}
 \subsection{Life Cycle of Thread}
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/Life-cycle-of-Java-threads.png}
 \end{figure}
 \subsection{Thread States}
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/thread-states.png}
 \end{figure}
 
 A thread can be in one of five states: New, Ready, Running, Blocked, or Finished showed in figure(\ref{fig:thread-states-detaild}).
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{figures/thread-states-detaild.png}
     \label{fig:thread-states-detaild}
@@ -401,7 +401,7 @@ public class Counter{
 \section{Why we need parallel computing?}
 for \textbf{New Applications} \\
 The graph shows that applications that require processing large amounts of data are the ones that benefit most from parallel computing.
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.7\linewidth]{figures/new-applications.png}
 \end{figure}
@@ -411,7 +411,7 @@ The graph shows that applications that require processing large amounts of data 
 \end{itemize}
 \section{Clock Speed}
 \subsection{clock speed over previous years}
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \subfloat{\includegraphics[width=0.55\linewidth]{figures/clock-speeds01.png}}
     \subfloat{\includegraphics[width=0.55\linewidth]{figures/clock-speeds02.png}}
@@ -499,7 +499,7 @@ algorithms, can be written almost entirely in parallel (usually, the “start up
 initial input I/O code is the exception), resulting in significant practical speed ups.
 This can be quantified by how well a code scales which is often measured as
 efficiency.
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.5\linewidth]{figures/amdahl-law03.png}
 \end{figure}
