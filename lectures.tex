@@ -419,7 +419,7 @@ The graph shows that applications that require processing large amounts of data 
 
 \subsection{Y-MP vs C90 supercomputers}
 When the PSC \footnote{PSC ~ Pittsburgh Supercomputing Center, The Pittsburgh Supercomputing Center (PSC) is a high performance computing and networking center founded in 1986 and one of the original five NSF Supercomputing Centers.} went from a 2.7 GFlop Y-MP
-to a 16 GFlop C90, the clock only got 50%
+to a 16 GFlop C90, the clock only got 50\%
 faster. The rest of the speed increase was
 due to increased use of parallel techniques:
 \begin{itemize}
@@ -584,6 +584,14 @@ Solution \\
     \includegraphics[width=0.99\linewidth]{figures/shared-memory01.png}
     \includegraphics[width=0.99\linewidth]{figures/shared-memory02.png}
 \end{minipage}
+
+\subsection{Distributed Memory}
+\begin{itemize}
+    \item Number of processors only limited by physical size (tens of meters).
+    \item Memory only limited by the number of processors time the maximum memory per processor (very large). However, physical packaging usually dictates no local disk per node and hence no virtual memory.
+    \item Since local and remote data have much different access times, data distribution is very important. We must minimize communication.
+\end{itemize}
+
 \begin{table}[h!]
     \centering
     \caption{Comparison of Shared and Distributed Memory Architectures}
@@ -602,12 +610,56 @@ Solution \\
     \end{tabular}
 \end{table}
 
-\section{}
-\subsection{Common Distributed Memory Machines}
-\section{Latency and Bandwidth}
+\subsubsection{Common Distributed Memory Machines}
+\begin{minipage}{0.5\linewidth}
+    \begin{itemize}
+        \item CM-2
+        \item CM-5
+        \item T3E
+    \end{itemize}
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+    \begin{itemize}
+        \item Workstation Cluster
+        \item  SP3
+        \item  TCS
+    \end{itemize}
+\end{minipage}
+\subsection{Common parallel computer architectures \cite{SIMD-and-MIMD}}
+\begin{itemize}
+    \item \textbf{SIMD} and \textbf{MIMD} are types of computer architectures that are used to improve the performance of certain types of computational tasks.
+    \item The basis of this classification is the number of data and instruction streams.
+    \item \textbf{SIMD}, short for Single Instruction Multiple Data, computer architecture can execute a single instruction on multiple data streams.
+    \item On the other hand, the \textbf{MIMD} (Multiple Instruction Multiple Data) computer architectures can execute several instructions on multiple data streams.
+    \item While the CM-2 is SIMD (one instruction unit for multiple processors), all
+          the new machines are MIMD (multiple instructions for multiple
+          processors) and based on commodity processors.\\
+          \begin{minipage}{0.5\linewidth}
+              \begin{itemize}
+                  \item SP-2
+                  \item CM-5
+                  \item T3E
+                  \item Workstations
+                  \item TCS
+              \end{itemize}
+          \end{minipage}
+          \begin{minipage}{0.5\linewidth}
+              \begin{itemize}
+                  \item POWER2
+                  \item SPARC
+                  \item Alpha
+                  \item Your Pick
+                  \item Alpha
+              \end{itemize}
+          \end{minipage}
+    \item Therefore, the single most defining characteristic of any of these machines
+          is probably the network.
+\end{itemize}
+
+
 \section{Data Parallel}
 \section{Work Sharing}
 \section{Load Balancing}
 \bibliography{./ref}
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \end{document}
