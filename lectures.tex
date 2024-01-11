@@ -655,7 +655,97 @@ Solution \\
     \item Therefore, the single most defining characteristic of any of these machines
           is probably the network.
 \end{itemize}
+\section{Networking for distributed machines}
+Even with the "perfect" network we have here, performance is determined by two more quantities
+that, \textbf{together with the topologies} we'll look at, pretty much define the network: \textbf{latency} and
+\textbf{bandwidth}.
 
+\begin{itemize}
+    \item latency
+    \item bandwidth
+    \item topologies
+\end{itemize}
+\subsection{Latency}
+\begin{itemize}
+    \item Latency can nicely be defined as the time required to send a message with 0 bytes of data.
+    \item This number often reflects either: \begin{itemize}
+              \item the overhead of packing your data into packets,
+              \item or the delays in making intervening hops across the network between two nodes that aren't next to each other.
+          \end{itemize}
+\end{itemize}
+\subsection{Bandwidth}
+\begin{itemize}
+    \item Bandwidth is the rate at which very large packets of information can be sent.
+    \item If there was no latency, this is the rate at which all data would be transferred.
+    \item It often reflects the physical capability of the wires and electronics connecting nodes.
+\end{itemize}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/Latency and Bandwidth.png}
+\end{figure}
+\subsection{Topologies}
+\subsubsection{Token-Ring/Ethernet with Workstations}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/Token-Ring.png}
+% \end{figure}
+\subsubsection{Complete Connectivity}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/Complete Connectivity.png}
+% \end{figure}
+\subsubsection{Super Cluster / SP2}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/Super Cluster (SP2).png}
+% \end{figure}
+\subsubsection{CM-2}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/CM-2.png}
+% \end{figure}
+\subsubsection{Binary Tree}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/Binary Tree.png}
+% \end{figure}
+\subsubsection{CM-5 Fat Tree}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/CM-5 Fat Tree.png}
+% \end{figure}
+\subsubsection{INTEL Paragon (2-D Mesh)}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.5\linewidth]{figures/INTEL Paragon (2-D Mesh).png}
+% \end{figure}
+\subsubsection{3-D Torus}
+\begin{minipage}{0.4\linewidth}
+    % \begin{figure}[h!]
+    % \centering
+    \includegraphics[width=0.9\linewidth]{figures/3-D Torus.png}
+    % \end{figure}
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+    \begin{itemize}
+        \item T3E has Global
+              Addressing hardware,
+              and this helps to
+              simulate shared
+              memory.
+        \item Torus means that “ends”
+              are connected. This
+              means A is really
+              connected to B and the
+              cube has no real
+              boundary.
+    \end{itemize}
+\end{minipage}
+\subsubsection{TCS Fat Tree}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/TCS Fat Tree.png}
+\end{figure}
 
 \section{Data Parallel}
 \section{Work Sharing}
