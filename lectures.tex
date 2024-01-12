@@ -8,6 +8,7 @@
     urlcolor=black
 }
 \usepackage[left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\usepackage[linguistics]{forest}
 \usepackage{listings}
 \usepackage{amssymb}
 
@@ -820,6 +821,61 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
 If you have used CRAYs before, this of this as “advanced multitasking”\\
 \textbf{Explain:} if you have used CRAYs before, you can think of work sharing as "advanced multitasking." This is because work sharing allows you to split up tasks and distribute them among multiple processors, which can significantly improve the performance of your code.
 \section{Load Balancing}
+\begin{itemize}
+    \item An important consideration which can be controlled by communication is load balancing:\\
+          Consider the case where a dataset is distributed evenly over 4 sites.\\
+          Each site will run a piece of code which uses the data as input and
+          attempts to find a convergence.\\
+          It is possible that the data contained at sites 0, 2, and 3 may converge much faster than the data at site 1.
+          \\If this is the case, the three sites which finished first will remain \textbf{idle} while site 1 finishes.
+          \\When attempting to balance the amount of work being done at each site, one must take into account:
+          \begin{itemize}
+              \item the speed of the processing site,
+              \item the communication "expense" of starting and coordinating separate pieces of work,
+              \item  and the amount of work required by various pieces of data.
+          \end{itemize}
+    \item There are two forms of load balancing: static and dynamic.\\
+          \begin{center}
+              \begin{forest}
+                  [load balancing forms [static load balancing] [dynamic load balancing [task-oriented] [data-oriented]]]
+              \end{forest}
+          \end{center}
+\end{itemize}
+\subsection{Static Load Balancing}
+\begin{itemize}
+    \item In static load balancing, the programmer must make a decision and assign a \textbf{fixed amount} of work to each processing site a priori.
+    \item Static load balancing can be used in either the
+          \begin{itemize}
+              \item  Master-Slave (Host-Node) programming model
+              \item or the "Hostless" programming model.
+          \end{itemize}
+    \item Static Load Balancing yields \textbf{Good performance} when:
+          \begin{itemize}
+              \item homogeneous cluster
+              \item each processing site has an equal amount of work
+          \end{itemize}
+    \item \textbf{Poor performance} when:
+          \begin{itemize}
+              \item heterogeneous cluster where some processors are much faster (unless this is taken into account in the program design)
+              \item work distribution is uneven
+          \end{itemize}
+\end{itemize}
+\subsection{Dynamic Load Balancing}
+\begin{itemize}
+    \item Dynamic load balancing can be further divided into the categories:
+          \begin{itemize}
+              \item \textbf{task-oriented (commonly used form)} \\
+                    when one processing site finishes its task, it is assigned another task (this is the most commonly used form).
+              \item \textbf{data-oriented (more complicated)}\\
+                    when one processing site finishes its task before other sites, the site with the most work gives the idle site some of its data to process (this is much more complicated because it requires an extensive amount of bookkeeping).
+          \end{itemize}
+    \item Dynamic load balancing can be used only in the Master-Slave programming model.
+    \item ideal for: \begin{itemize}
+              \item codes where tasks are large enough to keep each processing site busy
+              \item codes where work is uneven
+              \item heterogeneous clusters
+          \end{itemize}
+\end{itemize}
 \bibliography{./ref}
 \bibliographystyle{unsrt}
 \end{document}
