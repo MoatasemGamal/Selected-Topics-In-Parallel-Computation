@@ -403,13 +403,14 @@ public class Counter{
 \begin{itemize}
     \item The object can be explicitly locked in this way
           \begin{lstlisting}[language=java]
-        synchronized(myInstance){
-            try{
+    synchronized(myInstance){
+        try{
             wait();
-            }catch(InterruptedException ex){
-                System.out.println("Iam in this ");
-                notifyAll();
-            }
+        }catch(InterruptedException ex){}
+
+        System.out.println("Iam in this ");
+        notifyAll();
+    }
             \end{lstlisting}
     \item The synchronized keyword locks the object. The wait keyword waits for the lock to be acquired, if the object was already locked by another thread. notifyall() notifies other threads that the lock is about to be released by the current thread.
     \item Another method notify() is available for use, which wakes up only the next thread which is in queue for the object, notifyall() wakes up all the threads and transfers the lock to another thread having the highest priority.
