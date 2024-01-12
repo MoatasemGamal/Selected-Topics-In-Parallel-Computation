@@ -1032,6 +1032,388 @@ If you have used CRAYs before, this of this as “advanced multitasking”\\
               \item heterogeneous clusters
           \end{itemize}
 \end{itemize}
+
+\chapter{Parallelism, Threads, and Concurrency}
+\section{Our Goals}
+\begin{itemize}
+    \item Appreciate the (increasing) importance of parallel programming
+    \item  Understand fundamental concepts:
+          \begin{itemize}
+              \item Parallelism, threads, multi-threading, concurrency, locks, etc.
+          \end{itemize}
+    \item See some basics of this is done in Java
+    \item See some common uses:
+          \begin{itemize}
+              \item  Divide and conquer, e.g. mergesort
+              \item Worker threads in Swing
+          \end{itemize}
+\end{itemize}
+\section{Notes!}
+\begin{itemize}
+    \item An area of rapid change!
+          \begin{itemize}
+              \item  1990s: parallel computers were \$\$\$\$
+              \item Now: 4 core machines are commodity
+          \end{itemize}
+    \item  Variations between languages
+    \item  Old dogs and new tricks? Not so good...
+          \begin{itemize}
+              \item  Educators, Java books, web pages
+          \end{itemize}
+    \item Evolving frameworks, models, etc.
+          \begin{itemize}
+              \item  E.g. Java's getting Fork/Join in Java 1.7 (summer 11)
+              \item  MAP/REDUCE
+          \end{itemize}
+\end{itemize}
+
+\section{(Multi)Process vs (Multi)Thread}
+\begin{itemize}
+    \item Assume a computer has one CPU
+    \item Can only execute one statement at a time
+          \begin{itemize}
+              \item  Thus one program at a time
+          \end{itemize}
+    \item Process: an operating-system level "unit of execution"
+    \item Multi-processing
+          \begin{itemize}
+              \item Op. Sys. "time-slices" between processes
+              \item Computer appears to do more than one program (or background process) at a time
+          \end{itemize}
+\end{itemize}
+
+\section{Tasks and Threads}
+\begin{itemize}
+    \item Thread: "a thread of execution"
+          \begin{itemize}
+              \item "Smaller", "lighter" than a process
+              \item smallest unit of processing that can be scheduled by an operating system
+              \item Has its own run-time call stack, copies of the CPU's registers, its own program counter, etc.
+              \item Process has its own memory address space, but threads share one address space
+          \end{itemize}
+    \item A single program can be multi-threaded
+          \begin{itemize}
+              \item Time-slicing done just like in multiprocessing
+              \item Repeat: the threads share the same memory
+          \end{itemize}
+\end{itemize}
+
+\section{Task}
+\begin{itemize}
+    \item A task is an abstraction of a series of steps
+          \begin{itemize}
+              \item Might be done in a separate thread
+          \end{itemize}
+    \item In Java, there are a number of classes /\\
+          interfaces that basically correspond to this
+          \begin{itemize}
+              \item Example (details soon): Runnable
+                    \begin{itemize}
+                        \item work done by method run()
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+
+\section{Java: Statements $\rightarrow$ Tasks}
+\begin{itemize}
+    \item  Consecutive lines of code:
+          \begin{lstlisting}{language=java}
+        Foo tmp = f1;
+        f1 = f2;
+        f2 = tmp;
+    \end{lstlisting}
+    \item A method:
+          \begin{lstlisting}{language=java}
+        swap (f1, f2);
+    \end{lstlisting}
+    \item A "task" object:
+          \begin{lstlisting}{language=java}
+        Swap Task task1= new SwapTask(f1,2);
+        task1.run;
+    \end{lstlisting}
+\end{itemize}
+
+\section{Huh? Why a task object?}
+\begin{itemize}
+    \item  Actions, functions vs. objects. What's the difference?
+    \item Objects:
+          \begin{itemize}
+              \item Are persistent. Can be stored.
+              \item Can be created and then used later.
+              \item Can be attached to other things. Put in Collections.
+              \item Contain state.
+          \end{itemize}
+    \item Functions:
+          \begin{itemize}
+              \item Called, return (not permanent)
+          \end{itemize}
+\end{itemize}
+
+\section{Java Library Classes}
+\begin{itemize}
+    \item For task-like things:
+          \begin{itemize}
+              \item Runnable, Callable
+              \item SwingWorker, RecursiveAction, etc.
+          \end{itemize}
+    \item Thread class
+    \item Managing tasks and threads
+          \begin{itemize}
+              \item Executor, ExecutorService
+              \item ForkJoinPool
+          \end{itemize}
+    \item In Swing
+          \begin{itemize}
+              \item The Event-Dispatch Thread
+              \item SwingUtilities.invokeLater()
+          \end{itemize}
+\end{itemize}
+\section{Java's Nested Classes}
+\begin{itemize}
+    \item You can declare a class inside another
+          \begin{itemize}
+              \item \url{http://download.oracle.com/javase/tutorial/java/java00/nested.html}
+          \end{itemize}
+    \item If declared static, can use just like any class
+    \item If not static
+          \begin{itemize}
+              \item Can only define objects of that type from within non-static code of the enclosing class
+              \item Object of inner-class type can access all fields of the object that created it. (Useful!)
+              \item  Often used for "helper" classes, e.g. a node object used in a list or tree.
+          \end{itemize}
+    \item See demo done in Eclipse: TaskDemo.java
+\end{itemize}
+
+\section{Possible Needs for Task Objects}
+\begin{itemize}
+    \item Can you think of any?
+    \item Storing tasks for execution later
+          \begin{itemize}
+              \item Re-execution
+          \end{itemize}
+    \item Undo and Redo
+    \item Threads
+\end{itemize}
+
+\section{Undo Operations}
+\begin{itemize}
+    \item A task object should:
+          \begin{itemize}
+              \item Be able to execute and undo a function
+              \item Therefore will need to be able to save enough state to "go back"
+          \end{itemize}
+    \item When application executes a task:
+          \begin{itemize}
+              \item Create a task object and make it execute
+              \item Store that object on a undo stack
+          \end{itemize}
+    \item Undo
+          \begin{itemize}
+              \item Get last task object stored on stack, make it undo
+          \end{itemize}
+\end{itemize}
+
+\section{slide15: Calculator App Example}
+\begin{itemize}
+    \item We had methods to do arithmetic operations:
+          \begin{lstlisting}{language=java}
+        public void addToMemory(double inputVal) {
+            memory = memory + inputVal;
+        }
+    \end{lstlisting}
+    \item Instead:
+          \begin{lstlisting}{language=java}
+        public void addToMemory(double inputVal) {
+            AddTask task = new AddTask(inputVal);
+            task.run();
+            undoStack.add (task);
+        }
+    \end{lstlisting}
+\end{itemize}
+
+\section{slide16: Stack, Undo Stack}
+\begin{itemize}
+    \item  A Stack is an important ADT
+          \begin{itemize}
+              \item A linear sequence of data
+              \item Can only add to the end, remove item at the end
+              \item LIFO organization: "last in, first out"
+              \item Operations: push(x), pop(), sometimes top()
+          \end{itemize}
+    \item Stacks important for storing delayed things to return turn
+          \begin{itemize}
+              \item Run-time stack (with activation records)
+              \item An undo stack (and a separate redo stack)
+          \end{itemize}
+\end{itemize}
+
+\section{slide17: Nested class for Adding}
+\begin{lstlisting}{language=java}
+private class AddTask implements UndoableRunnable {
+    private double param;
+    public AddTask(double inputVal) {
+        this.param = inputVal;
+    }
+    public void run() { // memory is field in CalcApp
+        memory = memory + this.param;
+    }
+    public boolean undo() {
+        memory = memory - this.param;
+        return true;
+    }
+}
+\end{lstlisting}
+
+\section{slide18: Undo operation}
+\begin{itemize}
+    \item In the Calc app:
+          \begin{lstlisting}{language=java}
+    public boolean undo() {
+        boolean result = false;
+        int last = undoStack.size()-1;
+        if ( last >= 0){
+            UndoableRunnable task = undoStack.get(last);
+            result = task.undo();
+            undoStack.remove(last);
+        }
+        return result;
+    }
+    \end{lstlisting}
+\end{itemize}
+\section{slide19: Java Thread Classes and Methods}
+\begin{itemize}
+    \item Java has some "primitives" for creating and using threads
+          \begin{itemize}
+              \item Most sources teach these, but in practice they're hard to use well
+              \item Now, better frameworks and libraries make using them directly less important.
+          \end{itemize}
+    \item But let's take a quick look
+\end{itemize}
+
+\section{slide20: Java's Thread Class}
+\begin{itemize}
+    \item  Class Thread: it's method run() does its business when that thread is run
+    \item But you never call run(). Instead, you call start() which lets Java start it and call run ()
+    \item To use Thread class directly (not recommended now):
+          \begin{itemize}
+              \item define a subclass of Thread and override run () - not recommended!
+              \item Create a task as a Runnable, link it with a Thread, and then call start() on the Thread.
+                    \begin{itemize}
+                        \item The Thread will run the Runnable's run () method.
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+
+\section{slide21: Creating a Task and Thread}
+\begin{itemize}
+    \item Again, the first of the two "old" ways
+    \item Get a thread object, then call start() on that object
+          \begin{itemize}
+              \item Makes it available to be run
+              \item When it's time to run it, Thread's run() is called
+          \end{itemize}
+    \item So, create a thread using inheritance
+          \begin{itemize}
+              \item Write class that extends Thread, e.g. MyThread
+              \item Define your own run()
+              \item Create a MyThread object and call start() on it
+          \end{itemize}
+    \item We won't do this! Not good design!
+\end{itemize}
+\section{slide22: Runnables and Thread}
+\begin{itemize}
+    \item  Use the "task abstraction" and create a class that implements Runnable interface
+          \begin{itemize}
+              \item Define the run () method to do the work you want
+          \end{itemize}
+    \item  Now, two ways to make your task run in a separate thread
+          \begin{itemize}
+              \item First way:
+                    \begin{itemize}
+                        \item Create a Thread object and pass a Runnable to the constructor
+                        \item As before, call start() on the Thread object
+                    \end{itemize}
+              \item Second way: hand your Runnable to a "thread manager" object
+                    \begin{itemize}
+                        \item Several options here! These are the new good ways. More soon.
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+\section{slide23: Join (not the most descriptive word)}
+\begin{itemize}
+    \item The Threadclass defines various primitive methods you could not implement on your own
+          \begin{itemize}
+              \item For example: start, which calls run in a new thread
+          \end{itemize}
+    \item The join () method is one such method, essential for coordination in this kind of computation
+          \begin{itemize}
+              \item Caller blocks until/unless the receiver is done executing (meaning its run returns)
+              \item E.g. in method foo() running in "main" thread, we call:\\
+                    myThread.start(); myThread.join();
+              \item Then this code waits ("blocks") until myThread's run() completes
+          \end{itemize}
+    \item This style of parallel programming is often called "fork/join"
+          \begin{itemize}
+              \item Warning: we'll soon see a library called "fork/join" which simplifies things. In that, you never call join()
+          \end{itemize}
+\end{itemize}
+
+
+\section{slide30: New Java ForkJoin Framework}
+\begin{itemize}
+    \item Designed to support a common need
+          \begin{itemize}
+              \item Recursive divide and conquer code
+              \item Look for small problems, solve without parallelism
+              \item For larger problems
+                    \begin{itemize}
+                        \item Define a task for each subproblem
+                        \item Library provides
+                              \begin{itemize}
+                                  \item a Thread manager, called a ForkJoinPool
+                                  \item Methods to send your subtask objects to the pool to be run, and your call waits until their done
+                                  \item The pool handles the multithreading well
+                              \end{itemize}
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+
+
+\section{slide35: Same Ideas as Thread But...}
+To use the ForkJoin Framework:
+\begin{itemize}
+    \item A little standard set-up code (e.g., create a ForkJoinPool)
+\end{itemize}
+\begin{minipage}{0.5\linewidth}
+    Don't subclass Thread
+    \\ Don't override run
+    \\ Don't call start
+    \\ Don't just call join
+    \\ or
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+    Do subclass RecursiveTask$<V>$\\
+    Do override compute\\
+    Do call invoke, invokeAll, fork\\
+    Do call join which returns answer\\[0.5in]
+
+    Do call invokeAll on multiple tasks\\
+\end{minipage}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \bibliography{./ref}
 \bibliographystyle{unsrt}
 \end{document}
