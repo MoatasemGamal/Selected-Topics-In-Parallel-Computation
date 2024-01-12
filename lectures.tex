@@ -199,7 +199,7 @@ thr1.start();
 \end{enumerate}
 \textbf{Example} \\
 \begin{lstlisting}[language=java]
-/* ThreadEx1.java: A simple program creating and invoking a thread object 
+/* ThreadEx1.java: A simple program creating and invoking a thread object
 by extending the standard Thread class. */
 class MyThread extends Thread {
     public void run() {
@@ -240,8 +240,8 @@ class MyThread implements Runnable {
 \end{enumerate}
 \textbf{Example} \\
 \begin{lstlisting}[language=java]
-/* ThreadEx2.java: A simple program creating and invoking a thread object by
-implementing Runnable interface. */
+/* ThreadEx2.java: A simple program creating and invoking a thread object
+by implementing Runnable interface. */
 class MyThread implements Runnable {
     public void run() {
         System.out.println(" this thread is running ... ");
@@ -322,7 +322,7 @@ public class Counter{
         return count;
     }
 
-    public setCount(int count){
+    public void setCount(int count){
         this.count = count;
     }
 }
@@ -339,7 +339,7 @@ public class Counter{
 		return count;
 	}
 
-	public synchoronized setCount(int count){
+	public synchronized void setCount(int count){
     	this.count = count;
 	}
 }
@@ -355,7 +355,7 @@ public class Counter{
 	    return count;
 	}
 
-	public static synchronized setCount(int count){
+	public static synchronized void setCount(int count){
 	    this.count = count;
 	}
 }
@@ -372,7 +372,7 @@ public class Counter{
 		 return count;
 	}
 
-	public synchronized setCount(int count){
+	public synchronized void setCount(int count){
 		this.count = count;
 	}
 }
@@ -789,25 +789,25 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
                                                                                                                         \item Multitasking
                                                                                                                     \end{itemize}                                                                                        \\
     \hline
-    When to use   & \begin{itemize}
-                        \item Very array-oriented programs
-                              \begin{itemize}
+    When to use   & When to use Data Parallel: \begin{itemize}
+                                                   \item Very array-oriented programs
+                                                         \begin{itemize}
                   \item FEA
                   \item Fluid Dynamics
                   \item Neural Nets
                   \item Weather Modeling
               \end{itemize}
-                        \item Very synchronized operations
-                              \begin{itemize}
+                                                   \item Very synchronized operations
+                                                         \begin{itemize}
                   \item Image processing
                   \item Math analysis
               \end{itemize}
-                    \end{itemize}                                                               & \begin{itemize}
-                                                                                                      \item Very large / complex / old existing codes: Gaussian 90
-                                                                                                      \item Already multitasked codes: Charmm
-                                                                                                      \item Portability (Directive Based)
-                                                                                                      \item (Not Recommended)
-                                                                                                  \end{itemize}                                                                \\
+                                               \end{itemize}                                                       & When to use Work Sharing: \begin{itemize}
+                                                                                                                                                   \item Very large / complex / old existing codes: Gaussian 90
+                                                                                                                                                   \item Already multitasked codes: Charmm
+                                                                                                                                                   \item Portability (Directive Based)
+                                                                                                                                                   \item (Not Recommended)
+                                                                                                                                               \end{itemize}                   \\
     \hline
 \end{longtable}
 % \end{table}
