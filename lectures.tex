@@ -256,23 +256,23 @@ class ThreadEx2 {
 \end{lstlisting}
 \section{Life cycle of threads \& Thread states}
 \subsection{Life Cycle of Thread}
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.9\linewidth]{figures/Life-cycle-of-Java-threads.png}
-\end{figure}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.9\linewidth]{figures/Life-cycle-of-Java-threads.png}
+% \end{figure}
 \subsection{Thread States}
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.9\linewidth]{figures/thread-states.png}
-\end{figure}
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.9\linewidth]{figures/thread-states.png}
+% \end{figure}
 
-A thread can be in one of five states: New, Ready, Running, Blocked, or Finished showed in figure(\ref{fig:thread-states-detaild}).
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.9\linewidth]{figures/thread-states-detaild.png}
-    \label{fig:thread-states-detaild}
-    \caption{Thread states}
-\end{figure}
+A thread can be in one of five states: New, Ready, Running, Blocked, or Finished showed in figure(\ref{fig:thread-states-detaild}).\\
+% \begin{figure}[!h]
+% \centering
+\includegraphics[width=0.9\linewidth]{figures/thread-states-detaild.png}
+\label{fig:thread-states-detaild}
+% \caption{Thread states}
+% \end{figure}
 
 \subsection{Thread termination}
 A thread becomes Not Runnable when one of these events occurs:
@@ -752,19 +752,19 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
 % \begin{table}[h!]
 \begin{longtable}{|c|p{0.43\linewidth}|p{0.43\linewidth}|}
     \hline
-    --            & \textbf{Data Parallel}                                                                           & \textbf{Work Sharing}                                                                                 \\
+    --            & \textbf{Data Parallel}                                                                                 & \textbf{Work Sharing}                                                                                 \\
     \hline
-    --            & Only one executable                                                                              & Splits up tasks (as opposed to arrays in date parallel) such as loops amongst separate processors     \\
+    --            & Only one executable                                                                                    & Splits up tasks (as opposed to arrays in date parallel) such as loops amongst separate processors     \\
     \hline
-    computation   & Do computation on arrays of data using array operators                                           & Do computation on loops that are automatically distributed                                            \\
+    computation   & Do computation on arrays of data using array operators                                                 & Do computation on loops that are automatically distributed                                            \\
     \hline
-    communication & Do communications using array shift or rearrangement operators.                                  & Do communication as a side effect of data loop distribution. Not important on shared memory machines. \\
+    communication & Do communications using array shift or rearrangement operators.                                        & Do communication as a side effect of data loop distribution. Not important on shared memory machines. \\
     \hline
-    Good for      & Good for problems with static load balancing that are array-oriented SIMD machines               & Good for shared memory implementations.                                                               \\
+    Good for      & Good for problems with static load balancing that are array-oriented SIMD machines                     & Good for shared memory implementations.                                                               \\
     \hline
     Strengths     & \begin{enumerate}
                         \item Scales transparently to different size machines
-                        \item Easy debugging, as there I sonly one copy of coed executing in highly synchronized fashion
+                        \item Easy debugging, as there is only one copy of the code executing in a highly synchronized fashion
                     \end{enumerate} & \begin{enumerate}
                                           \item Directive based, so it can be added to existing serial codes
                                       \end{enumerate}                                                                                                          \\
@@ -772,11 +772,11 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
     Weaknesses    & \begin{enumerate}
                         \item Much wasted synchronization
                         \item Difficult to balance load
-                    \end{enumerate}                                                                & \begin{enumerate}
-                                                                                                         \item Limited flexibility
-                                                                                                         \item Efficiency dependent upon structure of existing serial code
-                                                                                                         \item May be very poor with distributed memory.
-                                                                                                     \end{enumerate}                                                        \\
+                    \end{enumerate}                                                                      & \begin{enumerate}
+                                                                                                               \item Limited flexibility
+                                                                                                               \item Efficiency dependent upon structure of existing serial code
+                                                                                                               \item May be very poor with distributed memory.
+                                                                                                           \end{enumerate}                                                        \\
     \hline
     Variants      & \begin{itemize}
                         \item FORTRAN 90
@@ -784,10 +784,10 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
                         \item HPF
                         \item   C*
                         \item CRAFT
-                    \end{itemize}                                                                                 & \begin{itemize}
-                                                                                                                        \item CRAFT
-                                                                                                                        \item Multitasking
-                                                                                                                    \end{itemize}                                                                                        \\
+                    \end{itemize}                                                                                       & \begin{itemize}
+                                                                                                                              \item CRAFT
+                                                                                                                              \item Multitasking
+                                                                                                                          \end{itemize}                                                                                        \\
     \hline
     When to use   & When to use Data Parallel: \begin{itemize}
                                                    \item Very array-oriented programs
@@ -802,12 +802,12 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
                   \item Image processing
                   \item Math analysis
               \end{itemize}
-                                               \end{itemize}                                                       & When to use Work Sharing: \begin{itemize}
-                                                                                                                                                   \item Very large / complex / old existing codes: Gaussian 90
-                                                                                                                                                   \item Already multitasked codes: Charmm
-                                                                                                                                                   \item Portability (Directive Based)
-                                                                                                                                                   \item (Not Recommended)
-                                                                                                                                               \end{itemize}                   \\
+                                               \end{itemize}                                                             & When to use Work Sharing: \begin{itemize}
+                                                                                                                                                         \item Very large / complex / old existing codes: Gaussian 90
+                                                                                                                                                         \item Already multitasked codes: Charmm
+                                                                                                                                                         \item Portability (Directive Based)
+                                                                                                                                                         \item (Not Recommended)
+                                                                                                                                                     \end{itemize}                   \\
     \hline
 \end{longtable}
 % \end{table}
