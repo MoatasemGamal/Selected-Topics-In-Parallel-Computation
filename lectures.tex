@@ -398,6 +398,161 @@ public class Counter{
     \hline
     Example                    & public synchronized void deposit() { ... }                                              & public static synchronized void getInstance() { ... }                                               \\
 \end{tabular}
+
+\section{Object locking}
+\begin{itemize}
+    \item The object can be explicitly locked in this way
+          \begin{lstlisting}[language=java]
+        synchronized(myInstance){
+            try{
+            wait();
+            }catch(InterruptedException ex){
+                System.out.println("Iam in this ");
+                notifyAll();
+            }
+            \end{lstlisting}
+    \item The synchronized keyword locks the object. The wait keyword waits for the lock to be acquired, if the object was already locked by another thread. notifyall() notifies other threads that the lock is about to be released by the current thread.
+    \item Another method notify() is available for use, which wakes up only the next thread which is in queue for the object, notifyall() wakes up all the threads and transfers the lock to another thread having the highest priority.
+\end{itemize}
+
+\section{Thread Priority}
+\begin{itemize}
+    \item In Java, each thread is assigned priority, which affects the order in which it is scheduled for running. The threads so far had same default priority (NORM\_PRIORITY) and they are served using FCFS policy.
+
+    \item Java allows users to change priority:
+          \begin{lstlisting}[language=java]
+            ThreadName.setPriority(intNumber)
+                \end{lstlisting}
+          \begin{itemize}
+              \item MIN\_PRIORITY = 1
+              \item NORM\_PRIORITY = 5
+              \item MAX\_PRIORITY = 10
+          \end{itemize}
+\end{itemize}
+
+\section{Shared Resources}
+\begin{itemize}
+    \item If one thread tries to read the data and other thread tries to update the same data, it leads to inconsistent state.
+    \item This can be prevented by synchronizing access to the data.
+    \item Use “synchronized” method:
+          \begin{lstlisting}[language=java]
+public synchronized void update()
+{
+    ....
+}
+            \end{lstlisting}
+\end{itemize}
+\subsection{the driver: 3 Threads sharing the same object}
+\begin{lstlisting}[language=java]
+class InternetBankingSystem {
+    public static void main(String [] args  ) {
+        Account accountObject = new Account (); 
+        Thread t1 = new Thread(new MyThread(accountObject));
+            Thread t2 = new Thread(new YourThread(accountObject));
+            Thread t3 = new Thread(new HerThread(accountObject));
+        t1.start();
+        t2.start();
+        t3.start();
+        // DO some other operation
+    } // end main()
+}
+\end{lstlisting}
+\subsection{Shared account object between 3 threads}
+\begin{lstlisting}[language=java]
+class MyThread implements Runnable  {
+ Account account;
+        public MyThread (Account s) {  account = s;}
+        public void run() { account.deposit(); }
+} // end class MyThread
+
+class YourThread implements Runnable  {
+ Account account;
+        public YourThread (Account s) { account = s;}
+        public void run() { account.withdraw(); }
+} // end class YourThread
+
+class HerThread implements Runnable  {
+ Account account;
+        public HerThread (Account s) { account = s; }
+        public void run() {account.enquire(); }
+} // end class HerThread
+    \end{lstlisting}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{figures/three-access-one.png}
+\end{figure}
+
+\subsection{Monitor (shared object access): serializes operation on shared objects}
+\begin{lstlisting}[language=java]
+class Account {   // the 'monitor'
+    int balance;
+
+ // if 'synchronized' is removed, the outcome is unpredictable
+  public synchronized void deposit( ) {
+     // METHOD BODY : balance += deposit_amount;
+   }
+
+    public synchronized void withdraw( ) {
+      // METHOD BODY: balance -= deposit_amount;
+    }
+    public synchronized void enquire( ) {
+      // METHOD BODY: display balance.
+    }
+ }
+\end{lstlisting}
+
+\section{Threaded Applications}
+\subsection{Multithreaded Web Server: For Serving Multiple Clients Concurrently}
+\includegraphics[width=0.5\linewidth]{figures/Web Server.png}
+\subsubsection{Architecture for Multithread Servers}
+\begin{itemize}
+    \item Multithreading enables servers to maximize their throughput, measured as the number of requests processed per second.
+    \item Threads may need to treat requests with varying priorities:
+          \begin{itemize}
+              \item A corporate server could prioritize request processing according to class of customers.
+          \end{itemize}
+    \item Architectures:
+          \begin{itemize}
+              \item Worker pool
+              \item Thread-per-request
+              \item Thread-per-connection
+              \item Thread-per-object
+          \end{itemize}
+\end{itemize}
+
+\subsection{Internet Browser + Youtube}
+\includegraphics[width=0.5\linewidth]{figures/youtube.png}
+
+\subsection{Editing and Printing documents in background}
+\includegraphics[width=0.5\linewidth]{figures/editing-and-print.png}
+\subsection{Multithreaded/Parallel File Copy}
+\includegraphics[width=0.7\linewidth]{figures/file-copy.png}
+
+\subsection{Online Bank: Serving Many Customers and Operations}
+\includegraphics[width=0.5\linewidth]{figures/online-banking.png}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \chapter{Parallel Computing: Overview (PSC)}{by John Urbanicurbanic@psc.edu}
 \section{Why we need parallel computing?}
 for \textbf{New Applications} \\
