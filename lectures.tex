@@ -747,8 +747,78 @@ that, \textbf{together with the topologies} we'll look at, pretty much define th
     \includegraphics[width=0.7\linewidth]{figures/TCS Fat Tree.png}
 \end{figure}
 
-\section{Data Parallel}
-\section{Work Sharing}
+\section{Data Parallel vs Work Sharing}
+% \begin{table}[h!]
+\begin{longtable}{|c|p{0.43\linewidth}|p{0.43\linewidth}|}
+    \hline
+    --            & \textbf{Data Parallel}                                                                           & \textbf{Work Sharing}                                                                                 \\
+    \hline
+    --            & Only one executable                                                                              & Splits up tasks (as opposed to arrays in date parallel) such as loops amongst separate processors     \\
+    \hline
+    computation   & Do computation on arrays of data using array operators                                           & Do computation on loops that are automatically distributed                                            \\
+    \hline
+    communication & Do communications using array shift or rearrangement operators.                                  & Do communication as a side effect of data loop distribution. Not important on shared memory machines. \\
+    \hline
+    Good for      & Good for problems with static load balancing that are array-oriented SIMD machines               & Good for shared memory implementations.                                                               \\
+    \hline
+    Strengths     & \begin{enumerate}
+                        \item Scales transparently to different size machines
+                        \item Easy debugging, as there I sonly one copy of coed executing in highly synchronized fashion
+                    \end{enumerate} & \begin{enumerate}
+                                          \item Directive based, so it can be added to existing serial codes
+                                      \end{enumerate}                                                                                                          \\
+    \hline
+    Weaknesses    & \begin{enumerate}
+                        \item Much wasted synchronization
+                        \item Difficult to balance load
+                    \end{enumerate}                                                                & \begin{enumerate}
+                                                                                                         \item Limited flexibility
+                                                                                                         \item Efficiency dependent upon structure of existing serial code
+                                                                                                         \item May be very poor with distributed memory.
+                                                                                                     \end{enumerate}                                                        \\
+    \hline
+    Variants      & \begin{itemize}
+                        \item FORTRAN 90
+                        \item CM FORTRAN
+                        \item HPF
+                        \item   C*
+                        \item CRAFT
+                    \end{itemize}                                                                                 & \begin{itemize}
+                                                                                                                        \item CRAFT
+                                                                                                                        \item Multitasking
+                                                                                                                    \end{itemize}                                                                                        \\
+    \hline
+    When to use   & \begin{itemize}
+                        \item Very array-oriented programs
+                              \begin{itemize}
+                  \item FEA
+                  \item Fluid Dynamics
+                  \item Neural Nets
+                  \item Weather Modeling
+              \end{itemize}
+                        \item Very synchronized operations
+                              \begin{itemize}
+                  \item Image processing
+                  \item Math analysis
+              \end{itemize}
+                    \end{itemize}                                                               & \begin{itemize}
+                                                                                                      \item Very large / complex / old existing codes: Gaussian 90
+                                                                                                      \item Already multitasked codes: Charmm
+                                                                                                      \item Portability (Directive Based)
+                                                                                                      \item (Not Recommended)
+                                                                                                  \end{itemize}                                                                \\
+    \hline
+\end{longtable}
+% \end{table}
+% \section{Work Sharing}
+
+\subsection{Data Parallel - Data Movement in FORTRAN 90}
+\includegraphics[width=0.5\linewidth]{figures/Data Movement in FORTRAN 90-01.png}
+\includegraphics[width=0.5\linewidth]{figures/Data Movement in FORTRAN 90-02.png}
+
+\subsection{Work Sharing - CRAYs}
+If you have used CRAYs before, this of this as “advanced multitasking”\\
+\textbf{Explain:} if you have used CRAYs before, you can think of work sharing as "advanced multitasking." This is because work sharing allows you to split up tasks and distribute them among multiple processors, which can significantly improve the performance of your code.
 \section{Load Balancing}
 \bibliography{./ref}
 \bibliographystyle{unsrt}
